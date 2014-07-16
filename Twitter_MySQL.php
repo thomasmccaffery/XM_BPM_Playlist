@@ -29,11 +29,18 @@ foreach ( $json as $Song )
 		$Current_Song = str_replace("#bpmBreaker","",$Current_Song); /* Remove Hashtags */
 		$Timed = strstr($Song->created_at, "+",true); /* Gets Time before "+ 000 2014 (year)" */
 		
-		$result = $mysqli->query("SELECT `ID` FROM PlayList WHERE SongTitle = '$Current_Song' ");
-		if($result->num_rows == 0) {
+		$Song_Check = $mysqli->query("SELECT `ID` FROM PlayList WHERE SongTitle = '$Current_Song' LIMIT 1");
+		$Time_Check = $mysqli->query("SELECT `ID` FROM Play_Times WHERE Timed = '$Timed' LIMIT 1");
+
+		if($Song_Check->num_rows == 0) {
 			mysqli_query($mysqli,"INSERT INTO PlayList (SongTitle, Timed) VALUES ('$Current_Song', '$Timed')"); /* INSERT New data into the DB. */			
+			mysqli_query($mysqli,"INSERT INTO Play_Times (Timed) VALUES ('$Timed')"); /* INSERT Time into Play_Times DB so songs are never recorded twice (checked against unique times already played). */			
+		} else if($Time_Check->num_rows == 0) {
+			mysqli_query($mysqli,"UPDATE PlayList SET `Count` = `Count` + 1 WHERE SongTitle = '$Current_Song' "); /* UPDATE song counter for frequency statistics. */
 		}
 	}
 }
+
+mysqli_close($mysqli);
 
 ?>
