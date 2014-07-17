@@ -7,10 +7,10 @@ include_once 'inc/connection.php';   /* DB Connection */
  
 $twitteruser = "bpm_playlist";
 $notweets = 20;
-$consumerkey = "AMDMOKOmdtglNnN3LW9M2IYf0";
-$consumersecret = "niKBhB8v2Cl22QaCs6v0OCXj9SAZ7YxEpPL64rNm49TTuvWno0";
-$accesstoken = "2647050835-9dxshY1wPlcUZAUuIPhzMZDrmx0LjQe6rwoIJNZ";
-$accesstokensecret = "68pQqnD53mgQK2SsAbqyRMA9S3J4Ap46J0M3nQ4KJay6W";
+$consumerkey = "";
+$consumersecret = "";
+$accesstoken = "";
+$accesstokensecret = "";
  
 function getConnectionWithAccessToken($cons_key, $cons_secret, $oauth_token, $oauth_token_secret) {
   $connection = new TwitterOAuth($cons_key, $cons_secret, $oauth_token, $oauth_token_secret);
