@@ -1,12 +1,13 @@
 <?
 
 include_once 'inc/connection.php';   /* DB Connection */
-
-$result = $mysqli->query("SELECT * FROM PlayList ORDER BY ID DESC");
-
+if($_SERVER['QUERY_STRING']=='Frequency') {$order='Count';}
+else {$order='ID';}
+$result = $mysqli->query("SELECT * FROM PlayList ORDER BY $order DESC");
 $Content='';
-$Content.='<table border="1">';
-$Content.='<tr><td>Song Title:</td><td>Time:</td><td>Frequency:</td>';
+$Content.='<div style="margin-bottom:1%;"><b><u>Songs By: <a href="./">Time</a> | <a href="./?Frequency">Frequency</a> Played</u></b></div>';
+$Content.='<div><table border="1">';
+$Content.='<tr><td>Song Title:</td><td>First Time:</td><td>Frequency:</td>';
 
 
 while($Row = mysqli_fetch_array($result)) {
@@ -16,7 +17,7 @@ while($Row = mysqli_fetch_array($result)) {
     $Content.='<td>'.$Row['Count'].'</td></tr>';
 }
 
-$Content.='</table>';
+$Content.='</table></div>';
 
 echo $Content;
 
