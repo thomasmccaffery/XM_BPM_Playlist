@@ -7,8 +7,8 @@ include_once 'inc/connection.php';   /* DB Connection */
  
 $twitteruser = "bpm_playlist";
 $notweets = 10;
-$consumerkey = "";
-$consumersecret = "";
+$consumerkey = ""; /* API Key */
+$consumersecret = ""; /* API Secret */
 $accesstoken = "";
 $accesstokensecret = "";
  
@@ -41,6 +41,7 @@ foreach ( $json as $Song )
 			mysqli_query($mysqli,"INSERT INTO Play_Times (Timed) VALUES ('$Timed')"); /* INSERT Time into Play_Times DB so songs are never recorded twice (checked against unique times already played). */			
 		} else if($Time_Check->num_rows == 0) {
 			mysqli_query($mysqli,"UPDATE PlayList SET `Count` = `Count` + 1 WHERE SongTitle = '$Current_Song' "); /* UPDATE song counter for frequency statistics. */
+			mysqli_query($mysqli,"INSERT INTO Play_Times (Timed) VALUES ('$Timed')"); /* INSERT Time into Play_Times DB so songs are never recorded twice (checked against unique times already played). */			
 		}
 	}
 }
