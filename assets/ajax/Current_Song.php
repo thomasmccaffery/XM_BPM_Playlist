@@ -6,10 +6,10 @@ include_once '../../inc/connection.php';   /* DB Connection */
  
 $twitteruser = "bpm_playlist";
 $notweets = 1;
-$consumerkey = "key";
-$consumersecret = "secret";
-$accesstoken = "token";
-$accesstokensecret = "secret_token";
+$consumerkey = "";
+$consumersecret = "";
+$accesstoken = "";
+$accesstokensecret = "";
  
 function getConnectionWithAccessToken($cons_key, $cons_secret, $oauth_token, $oauth_token_secret) {
   $connection = new TwitterOAuth($cons_key, $cons_secret, $oauth_token, $oauth_token_secret);
