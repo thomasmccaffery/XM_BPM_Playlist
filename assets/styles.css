@@ -1,0 +1,18 @@
+#Container {
+	position: relative;
+	margin: 0 auto;
+}
+
+#Song_Table {
+	position:relative;
+	float:left;
+	margin:0 1% 1% 0;
+}
+
+#Stats_Bar {
+	position:relative;
+	float:left;
+	border: 1px solid black;
+	padding: 1%;
+	line-height: 1.5;
+}
