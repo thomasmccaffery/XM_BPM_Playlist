@@ -1,4 +1,4 @@
-
+/* YouTube Player API [Keeps track of player state; We only use this when the player has ended.] */
 function onPlayerStateChange(event) {
     switch(event.data) {
         case YT.PlayerState.ENDED:
@@ -17,20 +17,23 @@ function onPlayerStateChange(event) {
     }
 }
 
+/* Builds YouTube Player with JS API */
 jQuery(document).ready(function($) {
 	$('.live').bind('contentchanged', function(e) {
         var vidId = $('.live').attr('id');
-        $('#container').html('<iframe id="player_'+vidId+
-            '" width="420" height="315" src="http://www.youtube.com/embed/'+
-            vidId+'?enablejsapi=1&autoplay=1&autohide=1&showinfo=0" '+
-            'frameborder="0" allowfullscreen></iframe>');
+		setTimeout(function(){
+			$('#container').html('<iframe id="player_'+vidId+
+				'" width="420" height="315" src="http://www.youtube.com/embed/'+
+				vidId+'?enablejsapi=1&autoplay=1&autohide=1&showinfo=0&origin=http://thomasmccaffery.com" '+
+				'frameborder="0" allowfullscreen></iframe>');
 
-        new YT.Player('player_'+vidId, {
-            events: {
-                'onStateChange': onPlayerStateChange
-            }
-        });
-    });
+			new YT.Player('player_'+vidId, {
+				events: {
+					'onStateChange': onPlayerStateChange
+				}
+			});
+		}, 500);
+	});
 });
 
 /* Ajax-Twitter Function [Gets the currently playing song title] */
@@ -39,9 +42,7 @@ function CurrentSong() {
 		url: "assets/ajax/Current_Song.php",
 		context: document.body,
 		async: false,
-		success: function(song){
-			console.log(song);
-		}
+		success: function(song){}
 	});
 	return Songd.responseText;
 }
@@ -56,11 +57,9 @@ function YouTubeID(SongRequest) {
 		async: false,
 		context: document.body,
 		success: function(YTD){
-			console.log(YTD);
-			/*$('#Now_Playing').attr('src', '//www.youtube.com/embed/'+YTD['ID']+'?autoplay=1');
-			YTD['Time'];*/
 			$('.live').attr('id', YTD['ID']);
 			$('.live').trigger('contentchanged');
+			$("#Playing_Song").html("Now Playing: "+SongRequest);
 			/* Check if song is the same title -- then wait 1 minute, try again. */
 		}
 	});
