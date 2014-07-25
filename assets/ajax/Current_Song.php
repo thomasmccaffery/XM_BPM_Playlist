@@ -5,11 +5,7 @@ require_once("../../twitteroauth-master/twitteroauth/twitteroauth.php"); /* Path
 include_once '../../inc/connection.php';   /* DB Connection */
  
 $twitteruser = "bpm_playlist";
-$notweets = 1;
-$consumerkey = "";
-$consumersecret = "";
-$accesstoken = "";
-$accesstokensecret = "";
+$notweets = 1;
  
 function getConnectionWithAccessToken($cons_key, $cons_secret, $oauth_token, $oauth_token_secret) {
   $connection = new TwitterOAuth($cons_key, $cons_secret, $oauth_token, $oauth_token_secret);
