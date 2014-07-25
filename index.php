@@ -8,7 +8,6 @@ $Playlist_Query = $mysqli->query("SELECT * FROM PlayList ORDER BY $order DESC");
 $Most_Played_Song = $mysqli->query("SELECT * FROM PlayList ORDER BY Count DESC LIMIT 1")->fetch_object()->SongTitle;
 $Since_Begin=$mysqli->query("SELECT Timed FROM PlayList ORDER BY Timed ASC LIMIT 1")->fetch_object()->Timed;
 $Content='';
-$Content.='<div style="margin-bottom:1%;"><b><u>Songs By: <a href="./">Time</a> | <a href="./?Frequency">Frequency</a> Played</u></b> -- <a href="./Live.php"><b><u>Live</u></b></a> </div>';
 $Content.='<div id="Song_Table"><table border="1">';
 $Content.='<tr><td>Song Title:</td><td>First Time:</td><td>Frequency:</td>';
 
@@ -34,6 +33,7 @@ $Average_Repeat=($Total_Played/$Total_Songs_Played);
 	</head>
 	<body>
 		<div id="Container">
+			<? include_once 'inc/Header.php';  ?>
 			<? echo $Content; ?>
 			<div id="Stats_Bar">
 				<b><u>Since: <? echo $Since_Begin; ?> </u></b>
