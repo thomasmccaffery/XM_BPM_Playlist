@@ -29,7 +29,7 @@ foreach ( $json as $Song )
 		$Current_Song = str_replace($CatchStrings,$EmptyStrings,$Current_Song); /* Remove Hashtags */		
 		$Timed = strstr($Song->created_at, "+",true); /* Gets Time before "+ 000 2014 (year)" */
 		
-		if(preg_match('[@|New Beats Now!|On Now!|Like It?|Ch52|Ch55]', $Current_Song) == true) { /* Cleans random tweets from song list. */
+		if(preg_match('[@|New Beats Now!|On Now!|Like It?|#TiestoSXM|Ch52|Ch55]', $Current_Song) == true) { /* Cleans random tweets from song list. */
 		} else {
 			$Song_Check = $mysqli->query("SELECT `ID` FROM PlayList WHERE SongTitle = '$Current_Song' LIMIT 1");
 			$Time_Check = $mysqli->query("SELECT `ID` FROM Play_Times WHERE Timed = '$Timed' LIMIT 1");
@@ -37,10 +37,10 @@ foreach ( $json as $Song )
 				echo "Title: ".$Current_Song." | "; /* Current Playing Title on Radio. */
 				echo "Time: ".$Timed; /* Date & Time Published on Twitter. */
 				echo "<br>";
-				mysqli_query($mysqli,"INSERT INTO PlayList (SongTitle, Timed) VALUES ('$Current_Song', '$Timed')"); /* INSERT New data into the DB. */			
+				mysqli_query($mysqli,"INSERT INTO PlayList (SongTitle, Timed, Last_Seen) VALUES ('$Current_Song', '$Timed', '$Timed')"); /* INSERT New data into the DB. */			
 				mysqli_query($mysqli,"INSERT INTO Play_Times (Timed) VALUES ('$Timed')"); /* INSERT Time into Play_Times DB so songs are never recorded twice (checked against unique times already played). */			
 			} else if($Time_Check->num_rows == 0) {
-				mysqli_query($mysqli,"UPDATE PlayList SET `Count` = `Count` + 1 WHERE SongTitle = '$Current_Song' "); /* UPDATE song counter for frequency statistics. */
+				mysqli_query($mysqli,"UPDATE PlayList SET `Count` = `Count` + 1, `Last_Seen`='$Timed' WHERE SongTitle = '$Current_Song' "); /* UPDATE song counter for frequency statistics. */
 				mysqli_query($mysqli,"INSERT INTO Play_Times (Timed) VALUES ('$Timed')"); /* INSERT Time into Play_Times DB so songs are never recorded twice (checked against unique times already played). */			
 			}
 		}
