@@ -9,7 +9,7 @@ $Most_Played_Song = $mysqli->query("SELECT * FROM PlayList ORDER BY Count DESC L
 $Since_Begin=$mysqli->query("SELECT Timed FROM PlayList ORDER BY Timed ASC LIMIT 1")->fetch_object()->Timed;
 $Content='';
 $Content.='<div id="Song_Table"><table border="1">';
-$Content.='<tr><td>Song Title:</td><td>First Time:</td><td>Frequency:</td>';
+$Content.='<tr><td>Song Title:</td><td>First Time:</td><td>Last Seen:</td><td>Frequency:</td>';
 
 while($Row = mysqli_fetch_array($Playlist_Query)) {
 	$Title_URL = str_replace(" ","+",$Row['SongTitle']);
