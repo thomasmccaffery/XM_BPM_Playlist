@@ -23,7 +23,7 @@ jQuery(document).ready(function($) {
         var vidId = $('.live').attr('id');
 		setTimeout(function(){
 			$('#container').html('<iframe id="player_'+vidId+
-				'" width="420" height="315" src="http://www.youtube.com/embed/'+
+				'" width="420" height="315" src="https://www.youtube.com/embed/'+
 				vidId+'?enablejsapi=1&autoplay=1&autohide=1&showinfo=0&origin=http://thomasmccaffery.com" '+
 				'frameborder="0" allowfullscreen></iframe>');
 
