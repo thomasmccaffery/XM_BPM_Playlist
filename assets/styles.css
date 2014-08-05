@@ -1,18 +1,35 @@
-#Container {
-	position: relative;
-	margin: 0 auto;
-}
-
-#Song_Table {
-	position:relative;
-	float:left;
-	margin:0 1% 1% 0;
-}
-
-#Stats_Bar {
-	position:relative;
-	float:left;
-	border: 1px solid black;
-	padding: 1%;
-	line-height: 1.5;
+html { width:100%; height:100%; margin:0; }
+body { width:100%; height:100%; margin:0; }
+
+#Container {
+	position: relative;
+	margin: 0 auto;
+}
+
+#Song_Table {
+	position:relative;
+	float:left;
+	margin:0 1% 1% 0;
+}
+
+#Stats_Bar {
+	position:relative;
+	float:left;
+	border: 1px solid black;
+	padding: 1%;
+	line-height: 1.5;
+}
+
+#Playing_Song {
+	margin-bottom: 1%;
+}
+
+#Previously_Played {
+	position:relative;
+	margin:0;
+	height:40%;
+	width:100%;
+	background-color: rgb(135, 139, 235);
+	border-top: 5px solid rgb(164, 135, 235);
+	border-bottom: 5px solid rgb(164, 135, 235);
 }
