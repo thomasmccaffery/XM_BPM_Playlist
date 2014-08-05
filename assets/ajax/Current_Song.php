@@ -18,7 +18,7 @@ $json = $connection->get("https://api.twitter.com/1.1/statuses/user_timeline.jso
 $Current_Song = strstr($json[0]->text, "playing",true); /* Gets Song Title before "playing ..." */
 $Current_Song = str_replace("#bpmBreaker","",$Current_Song); /* Remove Hashtags */
 		
-		if(preg_match('[@|New Beats Now!|On Now!|Like It?|#TiestoSXM|Ch52|Ch55]', $Current_Song) == true) { /* Cleans random tweets from song list. */
+		if(preg_match('[@|New Beats Now!|On Now!|Like It?|#TiestoSXM|Ch52|Ch55|CH36]', $Current_Song) == true) { /* Cleans random tweets from song list. */
 			echo "Commercial";
 		} else {
 			echo $Current_Song;
