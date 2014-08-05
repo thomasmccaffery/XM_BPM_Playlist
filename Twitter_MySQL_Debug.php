@@ -24,12 +24,12 @@ foreach ( $json as $Song )
 {
 	if($Song) {
 		$Current_Song = strstr($Song->text, "playing",true); /* Gets Song Title before "playing ..." */
-		$CatchStrings=array("#bpmBreaker","#BpmBreaker","#PRY28");
-		$EmptyStrings=array("","","");
+		$CatchStrings=array("#bpmBreaker","#BpmBreaker","#PRY28","#debut","#NVSB");
+		$EmptyStrings=array("","","","","");
 		$Current_Song = str_replace($CatchStrings,$EmptyStrings,$Current_Song); /* Remove Hashtags */		
 		$Timed = strstr($Song->created_at, "+",true); /* Gets Time before "+ 000 2014 (year)" */
 		
-		if(preg_match('[@|New Beats Now!|On Now!|Like It?|#TiestoSXM|Ch52|Ch55]', $Current_Song) == true) { /* Cleans random tweets from song list. */
+		if(preg_match('[@|New Beats Now!|On Now!|Like It?|#TiestoSXM|Ch52|Ch55|CH36]', $Current_Song) == true) { /* Cleans random tweets from song list. */
 		} else {
 			$Song_Check = $mysqli->query("SELECT `ID` FROM PlayList WHERE SongTitle = '$Current_Song' LIMIT 1");
 			$Time_Check = $mysqli->query("SELECT `ID` FROM Play_Times WHERE Timed = '$Timed' LIMIT 1");
