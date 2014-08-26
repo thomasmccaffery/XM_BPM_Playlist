@@ -23,7 +23,7 @@ jQuery(document).ready(function($) {
         var vidId = $('.live').attr('id');
 		setTimeout(function(){
 			$('#container').html('<iframe id="player_'+vidId+
-				'" width="420" height="315" src="https://www.youtube.com/embed/'+
+				'" clss="YTF" width="'+($(document).width()-10)+'" height="'+($(document).height()-5)+'" src="https://www.youtube.com/embed/'+
 				vidId+'?enablejsapi=1&autoplay=1&autohide=1&showinfo=0&origin=http://thomasmccaffery.com" '+
 				'frameborder="0" allowfullscreen></iframe>');
 
@@ -55,6 +55,12 @@ function YouTubeID(SongRequest) {
 		setTimeout(function(){
 			YouTubeID(CurrentSong());
 		}, 60000);
+	} else if(SongRequest=="Repeat") {
+		$('#container').html('No Song Update... A new song will be on when a new update is available.'); /* Wait for commercial Time Out */
+		$('#Playing_Song').html('');
+		setTimeout(function(){
+			YouTubeID(CurrentSong());
+		}, 300000);
 	} else {
 		var YTID = $.ajax({
 			type:'GET',
