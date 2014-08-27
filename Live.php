@@ -28,9 +28,8 @@ X- link to other main page list
   <head>
     <title>XM_BPM_Playlist Live</title>
 	<link rel="stylesheet" type="text/css" href="assets/styles.css" />
-	<style>body{background:black;}</style>
   </head>
-  <body>
+  <body class="black">
 	<center>
 		<div id="Floating_Header"><? include_once 'inc/Header.php';  ?></div>
 		
