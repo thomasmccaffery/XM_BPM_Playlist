@@ -1,8 +1,17 @@
+/* Live.php / Radio.php Determination Function -- Picks which PHP route to get either current live songs, or random songs from the database. */
+function Funct() {
+	if(location.pathname == "/Labs/XM_BPM_Playlist/Radio.php") {
+		return LocalSong();
+	} else {
+		return CurrentSong();
+	}
+}
+
 /* YouTube Player API [Keeps track of player state; We only use this when the player has ended.] */
 function onPlayerStateChange(event) {
     switch(event.data) {
         case YT.PlayerState.ENDED:
-			YouTubeID(CurrentSong()); /* After Song Ends - Get the new now currently playing song */
+			YouTubeID(Funct()); /* After Song Ends - Get the new now currently playing song */
             break;
         case YT.PlayerState.PLAYING:
             break;
@@ -36,7 +45,7 @@ jQuery(document).ready(function($) {
 	});
 });
 
-/* Ajax-Twitter Function [Gets the currently playing song title] */
+/* Live.php -- Ajax-Twitter Function [Gets the currently playing song title] */
 function CurrentSong() {
 	var Songd = $.ajax({
 		url: "assets/ajax/Current_Song.php",
@@ -47,16 +56,27 @@ function CurrentSong() {
 	return Songd.responseText;
 }
 
+/* Radio.php -- Ajax-DB Function [Gets a song title from the DB] */
+function LocalSong() {
+	var SongL = $.ajax({
+		url: "assets/ajax/New_Local_Song.php",
+		context: document.body,
+		async: false,
+		success: function(song){}
+	});
+	return SongL.responseText;
+}
+
 /* Youtube API [Searches for Song, Returns first video ID, pushes video to html, starts play] */
 function YouTubeID(SongRequest) {
 	if(SongRequest=="Commercial") {
-		$('#container').html('Commercial In Progress... A new song will be on shortly.'); /* Wait for commercial Time Out */
+		$('#container').html('Commercial In Progress... A new song will be on shortly.'); /* Wait for 1 minute commercial Time Out */
 		$('#Playing_Song').html('');
 		setTimeout(function(){
 			YouTubeID(CurrentSong());
 		}, 60000);
 	} else if(SongRequest=="Repeat") {
-		$('#container').html('No Song Update... A new song will be on when a new update is available.'); /* Wait for commercial Time Out */
+		$('#container').html('No Song Update... A new song will be on when a new update is available.'); /* Wait for 5 minute Time Out [Allow time for twitter feed to eventually update] */
 		$('#Playing_Song').html('');
 		setTimeout(function(){
 			YouTubeID(CurrentSong());
@@ -81,5 +101,5 @@ function YouTubeID(SongRequest) {
 
 /* On Start - Get Current Playing Song */
 $( document ).ready(function() {
-	YouTubeID(CurrentSong());
+	YouTubeID(Funct());
 });
