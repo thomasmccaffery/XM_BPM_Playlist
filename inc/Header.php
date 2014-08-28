@@ -2,7 +2,7 @@
 	
 	<? 
 	$dw = date( "w"); /* Current Day of the week (need to get Thursdays to show the feed is down - due to '#ThrowBackThursdays/Utopia' takeover.)*/
-	if($dw == 4) { ?>
-		<div id="TBT"><b><u>Note:</u> BPM_XM Feed down on Thursdays due to #ThrowBackThursdays/UtopiaXM channel takeover every Thursday!</b>
-		<br/> Channel will currently just keep repeating the same last song on Thursday.</div>
+	if(($dw == 4) && (basename($_SERVER['PHP_SELF'])!='Radio.php')) { ?>
+		<div id="TBT"><b><u>Note:</u> BPM_XM Feed May be Down on Thursday's due to Sirius/XM Channel takeover on Thursday's!</b>
+		<br/> Channel may keep searching for new songs all Thursday.</div>
 	<? } ?>
