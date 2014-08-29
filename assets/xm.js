@@ -1,3 +1,7 @@
+var player; /* YouTube Player ID */
+var timestamp = 360; /* Song Too Long TimeStamp */
+var timer; /* Current Timer Countdown; initially null until new song */
+
 /* Live.php / Radio.php Determination Function -- Picks which PHP route to get either current live songs, or random songs from the database. */
 function Funct() {
 	if(location.pathname == "/Labs/XM_BPM_Playlist/Radio.php") {
@@ -7,6 +11,29 @@ function Funct() {
 	}
 }
 
+/* TimeStamp Reach Action -- If Song longer than 6 minutes, seek next song! (YouTube gives 50+ minute songs sometimes!!) */
+function timestamp_reached() {
+	YouTubeID(Funct()); /* Seek Next Song */
+}
+
+/* Change TimeStamp Info based on  */
+function timestamp_callback() {
+	clearTimeout(timer);
+
+	current_time = player.getCurrentTime(); /* Gets Current Play Time in Song  */
+
+	remaining_time = timestamp - current_time; /* Gets Remaining Time between where the song is relative to the time-out (song change @ 6 minutes)  */
+
+	if (remaining_time > 0) {
+		timer = setTimeout(timestamp_reached, remaining_time * 1000); /* Sets Timeout() JS function so that the song changes after the 6 minute mark */
+	}    
+}
+
+/* Stops TimeOut Function (TimeOut Initiated by Play Button) */
+function pause_timestamp_callback() {
+	clearTimeout(timer); /* Stops Currently Running Count-Down setTimeout() function previously set when song played in timestamp_callback() function */
+}
+
 /* YouTube Player API [Keeps track of player state; We only use this when the player has ended.] */
 function onPlayerStateChange(event) {
     switch(event.data) {
@@ -14,8 +41,10 @@ function onPlayerStateChange(event) {
 			YouTubeID(Funct()); /* After Song Ends - Get the new now currently playing song */
             break;
         case YT.PlayerState.PLAYING:
+			timestamp_callback(); /* Time Stamp Call */
             break;
         case YT.PlayerState.PAUSED:
+			pause_timestamp_callback(); /* Clears 6 minute Time-out so that the video isn't refreshed and subsequently begin playing a new song while paused. */
             break;
         case YT.PlayerState.BUFFERING:
             break;
@@ -36,7 +65,7 @@ jQuery(document).ready(function($) {
 				vidId+'?enablejsapi=1&autoplay=1&autohide=1&showinfo=0&origin=http://thomasmccaffery.com" '+
 				'frameborder="0" allowfullscreen></iframe>');
 
-			new YT.Player('player_'+vidId, {
+			player = new YT.Player('player_'+vidId, {
 				events: {
 					'onStateChange': onPlayerStateChange
 				}
